@@ -1,11 +1,10 @@
 build:	
 	g++ -g -std=c++17 -c ./src/*.cpp
-	g++ -g -std=c++17 -c ./test/test_utils.cpp
+	g++ -g -std=c++17 -c ./test/test_readFile.cpp
 	mkdir -p obj && mv ./*.o ./obj
-	g++ -g ./obj/*.o -o testapp -lsfml-graphics -lsfml-window -lsfml-system
-	chmod 755 ./testapp
-	./testapp
+	g++ -g ./obj/*.o -o app #-lsfml-graphics -lsfml-window -lsfml-system
+	chmod 755 ./app
+	./app
 
 clean: 
 	rm -rf ./obj
-	rm -rf ./saveData/*.dat
