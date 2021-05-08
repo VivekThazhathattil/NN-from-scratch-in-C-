@@ -1,0 +1,11 @@
+build:	
+	g++ -g -std=c++17 -c ./src/*.cpp
+	g++ -g -std=c++17 -c ./test/test_utils.cpp
+	mkdir -p obj && mv ./*.o ./obj
+	g++ -g ./obj/*.o -o testapp -lsfml-graphics -lsfml-window -lsfml-system
+	chmod 755 ./testapp
+	./testapp
+
+clean: 
+	rm -rf ./obj
+	rm -rf ./saveData/*.dat
