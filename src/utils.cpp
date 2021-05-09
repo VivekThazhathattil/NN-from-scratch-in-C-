@@ -40,3 +40,43 @@ void Utils::classNumVec2OutMat(Eigen::MatrixXf& outMat, Eigen::MatrixXf& classNu
 		outMat( i, jTemp) = 1;
 	}
 }
+
+void Utils::activationFunction(Eigen::MatrixXf& X, Eigen::MatrixXf& Y){
+	for (int i = 0; i < X.rows(); i++)
+		for(int j = 0; j < X.cols(); j++)
+			Y(i,j) = 0.5*(tanh(X(i,j)) + 1);
+}
+
+void Utils::activationFunctionPrime(Eigen::MatrixXf& X, Eigen::MatrixXf& Y){
+	for (int i = 0; i < X.rows(); i++)
+		for(int j = 0; j < X.cols(); j++)
+			Y(i,j) = 0.5*(1 - tanh(X(i,j))*tanh(X(i,j)))
+}
+
+void Utils::feedForwardFunction(Eigen::MatrixXf& inMat, Eigen::MatrixXf& outMat, Eigen::MatrixXf& wtsMat, Eigen::MatrixXf& bias){
+	Eigen::MatrixXf net(1,1);
+	Eigen::MatrixXf temp = horzCat(inMat, bias);
+	net = wtsMat * temp;
+	outMat = activationFunction(net);
+	
+}
+
+void Utils::horzCat(Eigen::MatrixXf& x, Eigen::MatrixXf& y, Eigen::MatrixXf& z){
+	assert(x.rows() == y.rows());
+	assert(y.rows() == z.rows());
+
+	for(int i = 0; i < x.rows(); i++)
+		for(int j = 0; j < x.cols() + y.cols(); j++){
+			if( j < x.cols())
+				z(i,j) = x(i,j);
+			else
+				z(i,j) = y(i,j);
+		}
+	
+}
+
+void initWts( float maxWt, float width, float height, Eigen::MatrixXf& mat){
+	mat = Eigen::MatrixXf::Random(height,width) * maxWt;
+}
+
+void evalNetworkError();
